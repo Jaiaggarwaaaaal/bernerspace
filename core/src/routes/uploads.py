@@ -45,6 +45,7 @@ async def upload_tar(
     # Persist metadata
     metadata = Version(
         project_id=pid,
+        project_name=proj.name, 
         version=version,
         filename=file.filename,
         gcs_path=filename,
@@ -56,7 +57,18 @@ async def upload_tar(
     )
     await metadata.insert()
 
-    return UploadResponse(project_id=project_id, version=version, success=True)
+    return UploadResponse(
+        project_id=project_id,
+        project_name=proj.name,
+        version=version,
+        success=True,
+        filename=file.filename,
+        gcs_path=filename,
+        size=size,
+        current_path=current_path,
+        language=language,
+        has_dockerfile=has_dockerfile
+    )
 
 @router.get("/{project_id}/download/{version}")
 async def download_tar(
@@ -64,7 +76,6 @@ async def download_tar(
     version: int,
     owner_email: str = Depends(get_current_user_email)
 ):
-    # Fetch version metadata
     try:
         pid = PydanticObjectId(project_id)
     except:
@@ -78,5 +89,17 @@ async def download_tar(
     return StreamingResponse(
         iter([content]),
         media_type="application/x-tar",
-        headers={"Content-Disposition": f"attachment; filename=project_{project_id}_v{version}.tar"}
+        headers={
+            "Content-Disposition": f"attachment; filename={ver.filename}",
+            "X-Project-Id": str(ver.project_id),
+            "X-Project-Name": getattr(ver, "project_name", ""),  # <-- Use getattr for safety
+            "X-Version": str(ver.version),
+            "X-Filename": ver.filename,
+            "X-GCS-Path": ver.gcs_path,
+            "X-Size": str(ver.size),
+            "X-Current-Path": ver.current_path,
+            "X-Language": ver.language,
+            "X-Has-Dockerfile": str(ver.has_dockerfile),
+            "X-Uploaded-At": str(ver.uploaded_at)
+        }
     )

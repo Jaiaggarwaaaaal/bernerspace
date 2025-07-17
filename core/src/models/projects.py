@@ -39,5 +39,12 @@ class ProjectResponse(BaseModel):
 
 class UploadResponse(BaseModel):
     project_id: str
+    project_name: str 
     version: int
     success: bool
+    filename: str
+    gcs_path: str
+    size: int
+    current_path: str
+    language: str
+    has_dockerfile: bool

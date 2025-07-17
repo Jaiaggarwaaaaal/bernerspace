@@ -1,3 +1,4 @@
+from typing import List
 from fastapi import APIRouter, Depends, HTTPException
 from beanie import PydanticObjectId
 from src.models.projects import Project, Version, CreateProjectRequest, ProjectResponse
@@ -56,3 +57,30 @@ async def get_project(
         created_at=proj.created_at,
         versions=versions_data
     )
+
+
+@router.get("/", response_model=List[ProjectResponse])
+async def list_projects(owner_email: str = Depends(get_current_user_email)):
+    projects = await Project.find({"owner_email": owner_email}).to_list()
+    result = []
+    for proj in projects:
+        vers = await Version.find({"project_id": proj.id}).sort("version").to_list()
+        versions_data = [{
+            "version": v.version,
+            "filename": v.filename,
+            "gcs_path": v.gcs_path,
+            "size": v.size,
+            "current_path": v.current_path,
+            "language": v.language,
+            "has_dockerfile": v.has_dockerfile,
+            "env_vars": v.env_vars,
+            "uploaded_at": v.uploaded_at
+        } for v in vers]
+        result.append(ProjectResponse(
+            id=str(proj.id),
+            name=proj.name,
+            owner_email=proj.owner_email,
+            created_at=proj.created_at,
+            versions=versions_data
+        ))
+    return result

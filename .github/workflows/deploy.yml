@@ -72,5 +72,4 @@ jobs:
           --region asia-south1 \
           --platform managed \
           --allow-unauthenticated \
-          --set-env-vars "MONGO_URI=${{ secrets.MONGO_URI }},DB_NAME=${{ secrets.DB_NAME }},GCP_BUCKET=${{ secrets.GCP_BUCKET }}" \
-          --service bernerspace-backend
+          --set-env-vars "MONGO_URI=${{ secrets.MONGO_URI }},DB_NAME=${{ secrets.DB_NAME }},GCP_BUCKET=${{ secrets.GCP_BUCKET }}"

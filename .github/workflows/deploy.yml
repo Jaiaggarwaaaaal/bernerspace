@@ -58,7 +58,8 @@ jobs:
       id: auth
       uses: google-github-actions/auth@v2
       with:
-        credentials_json: '${{ secrets.GCP_CREDENTIALS }}'
+        workload_identity_provider: 'projects/584438132152/locations/global/workloadIdentityPools/github-pool/providers/github-provider'
+        service_account: 'bspace@airy-totality-465918-i2.iam.gserviceaccount.com'
     - name: Configure Docker
       run: gcloud auth configure-docker asia-south1-docker.pkg.dev
     - name: Build and Push Docker Image

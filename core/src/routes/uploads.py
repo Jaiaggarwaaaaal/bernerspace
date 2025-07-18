@@ -25,7 +25,7 @@ async def upload_tar(
     # Validate project
     try:
         pid = PydanticObjectId(project_id)
-    except:
+    except Exception:
         raise HTTPException(status_code=400, detail="Invalid project ID")
     proj = await Project.get(pid)
     if not proj or proj.owner_email != owner_email:
@@ -78,7 +78,7 @@ async def download_tar(
 ):
     try:
         pid = PydanticObjectId(project_id)
-    except:
+    except Exception:
         raise HTTPException(status_code=400, detail="Invalid project ID")
     ver = await Version.find_one({"project_id": pid, "version": version})
     if not ver:

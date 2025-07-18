@@ -24,7 +24,7 @@ app.include_router(uploads_router)
 app.include_router(auth_router) 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8000))
+    port = int(os.getenv("PORT", 8080))
     print("Starting Bernerpace Sandbox API...")
     uvicorn.run(
         "main:app",  

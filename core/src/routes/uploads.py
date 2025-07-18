@@ -5,29 +5,32 @@ from beanie import PydanticObjectId
 from src.models.projects import Project, Version, UploadResponse
 from src.config.auth import get_current_user_email
 from src.config.config import settings
+import logging
+
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 router = APIRouter(prefix="/projects", tags=["uploads"])
-
-# GCS client is initialized within the route
-# gcs_client = storage.Client()
-# bucket = gcs_client.bucket(settings.GCP_BUCKET)
 
 @router.post("/{project_id}/upload", response_model=UploadResponse)
 async def upload_tar(
     project_id: str,
     file: UploadFile = File(...),
-    env_vars: str = Form(...),       # JSON string of dict
+    env_vars: str = Form(...),
     current_path: str = Form(...),
     language: str = Form(...),
     has_dockerfile: bool = Form(False),
     owner_email: str = Depends(get_current_user_email)
 ):
-    # Initialize GCS client and bucket
+    logger.info(f"Starting upload for project_id: {project_id}")
     gcs_client = storage.Client()
     try:
+        logger.info(f"Attempting to access bucket: {settings.GCP_BUCKET}")
         bucket = gcs_client.bucket(settings.GCP_BUCKET)
     except Exception as e:
+        logger.error(f"GCS bucket error: {e}")
         raise HTTPException(status_code=500, detail=f"GCS bucket misconfigured: {e}")
+
 
     # Validate project
     try:

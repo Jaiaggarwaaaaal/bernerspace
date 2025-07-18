@@ -2,9 +2,9 @@ from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from fastapi.responses import StreamingResponse
 from google.cloud import storage
 from beanie import PydanticObjectId
-from .src.models.projects import Project, Version, UploadResponse
-from .src.config.auth import get_current_user_email
-from .src.config.config import settings
+from ..models.projects import Project, Version, UploadResponse
+from ..config.auth import get_current_user_email
+from ..config.config import settings
 import logging
 
 logging.basicConfig(level=logging.INFO)

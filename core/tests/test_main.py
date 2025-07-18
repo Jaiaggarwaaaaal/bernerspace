@@ -1,4 +1,3 @@
-import pytest
 from fastapi.testclient import TestClient
 from core.main import app
 from src.config.auth import get_current_user_email

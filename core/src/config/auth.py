@@ -1,4 +1,4 @@
-from fastapi import Depends, HTTPException
+from fastapi import HTTPException
 
 def get_current_user_email():
     # TODO: replace with real GitHub OAuth flow

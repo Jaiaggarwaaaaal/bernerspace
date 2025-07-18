@@ -23,11 +23,12 @@ app.include_router(uploads_router)
 
 
 if __name__ == "__main__":
-    port = int(os.getenv("PORT", 8000))
-    print("Starting Bernerpace Sandbox API...")
+    # Use the PORT environment variable provided by Cloud Run, default to 8080 for local development
+    port = int(os.getenv("PORT", 8080))
+    # Disable reload in production
     uvicorn.run(
         "main:app",  
         host="0.0.0.0",
         port=port,
-        reload=True
+        reload=False
     )

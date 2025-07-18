@@ -2,7 +2,7 @@ from pydantic_settings import BaseSettings
 
 class Settings(BaseSettings):
     MONGO_URI: str
-    DB_NAME: str = bernerspace
+    DB_NAME: str = "bernerspace"
     GCP_BUCKET: str
     GOOGLE_APPLICATION_CREDENTIALS: str
     GITHUB_CLIENT_ID: str

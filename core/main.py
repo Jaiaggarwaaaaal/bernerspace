@@ -25,7 +25,7 @@ app.include_router(auth_router)
 
 if __name__ == "__main__":
     # Use the PORT environment variable provided by Cloud Run, default to 8080 for local development
-    port = int(os.getenv("PORT", 8080))
+    port = int(os.getenv("PORT", 8000))
     # Disable reload in production
     uvicorn.run(
         "main:app",  

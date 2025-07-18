@@ -8,9 +8,9 @@ from src.config.config import settings
 
 router = APIRouter(prefix="/projects", tags=["uploads"])
 
-# Initialize GCS client
-gcs_client = storage.Client()
-bucket = gcs_client.bucket(settings.GCP_BUCKET)
+# GCS client is initialized within the route
+# gcs_client = storage.Client()
+# bucket = gcs_client.bucket(settings.GCP_BUCKET)
 
 @router.post("/{project_id}/upload", response_model=UploadResponse)
 async def upload_tar(
@@ -22,6 +22,13 @@ async def upload_tar(
     has_dockerfile: bool = Form(False),
     owner_email: str = Depends(get_current_user_email)
 ):
+    # Initialize GCS client and bucket
+    gcs_client = storage.Client()
+    try:
+        bucket = gcs_client.bucket(settings.GCP_BUCKET)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"GCS bucket misconfigured: {e}")
+
     # Validate project
     try:
         pid = PydanticObjectId(project_id)
@@ -76,6 +83,13 @@ async def download_tar(
     version: int,
     owner_email: str = Depends(get_current_user_email)
 ):
+    # Initialize GCS client and bucket
+    gcs_client = storage.Client()
+    try:
+        bucket = gcs_client.bucket(settings.GCP_BUCKET)
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=f"GCS bucket misconfigured: {e}")
+
     try:
         pid = PydanticObjectId(project_id)
     except Exception:

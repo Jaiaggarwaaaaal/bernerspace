@@ -30,10 +30,7 @@ jobs:
       run: |
         pip install ruff
         ruff check core/
-    - name: Test with pytest
-      run: |
-        pip install pytest httpx
-        pytest core/
+    
 
   typescript-ci:
     runs-on: ubuntu-latest

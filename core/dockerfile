@@ -15,4 +15,5 @@ COPY ./core /app/core
 WORKDIR /app/core
 
 # Command to run the application
-CMD ["python", "main.py"]
+# Command to run the application
+CMD exec gunicorn -w 4 -k uvicorn.workers.UvicornWorker -b "0.0.0.0:$PORT" main:app

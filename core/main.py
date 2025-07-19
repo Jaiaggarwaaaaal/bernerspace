@@ -12,6 +12,10 @@ from src.routes.uploads import router as uploads_router
 
 load_dotenv()
 app = FastAPI(title="Bernerpace Sandbox API", version="1.0.0")
+
+@app.get("/")
+async def read_root():
+    return {"message": "Welcome to Bernerspace Sandbox API!"}
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 

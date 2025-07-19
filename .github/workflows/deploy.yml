@@ -74,4 +74,3 @@ jobs:
           --platform managed \
           --allow-unauthenticated \
           --set-env-vars "MONGO_URI=${{ secrets.MONGO_URI }},DB_NAME=${{ secrets.DB_NAME }},GCP_BUCKET=${{ secrets.GCP_BUCKET }},GOOGLE_APPLICATION_CREDENTIALS=/app/core/airy-totality-465918-i2-ca296b2fa7a2.json"
-          --timeout 180

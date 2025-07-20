@@ -1,9 +1,11 @@
 import { Command } from "commander";
 import initCommand from "./commands/init";
+import dotenv from "dotenv";
+import path from "path";
 import logoutCommand from "./commands/logout";
 import detailsCommand from "./commands/details";
-
 const program = new Command();
+dotenv.config();
 program
   .name("bernerspace")
   .description("CLI for Bernerspace project management")

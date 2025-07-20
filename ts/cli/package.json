@@ -11,6 +11,13 @@
     "start": "node dist/main.js",
     "prepare": "npm run build",
     "postinstall": "npm run build"
+  "name": "@bernerpsace/cli",
+  "version": "1.0.0",
+  "main": "index.js",
+  "scripts": {
+    "test": "jest",
+    "build": "tsc",
+    "start": "ts-node src/app.ts"
   },
   "keywords": [],
   "author": "",

@@ -7,7 +7,8 @@ class Settings(BaseSettings):
     GOOGLE_APPLICATION_CREDENTIALS: str
     CLIENT_ID: str
     CLIENT_SECRET: str 
-    
+    GOOGLE_APPLICATION_CREDENTIALS: str 
+
     class Config:
         env_file = ".env"
 

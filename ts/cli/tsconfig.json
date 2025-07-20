@@ -1,5 +1,19 @@
 {
   "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "outDir": "dist",
+    "rootDir": "src",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true
+  },
+  "exclude": [
+    "node_modules",
+    "tests",
+    "jest.config.js"
+  ]
+}
     "module": "commonjs",
     "esModuleInterop": true,
     "target": "es6",
@@ -11,3 +25,4 @@
   },
   "lib": ["es2015"]
 }
+
